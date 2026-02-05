@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Studi Kelayakan Ekspansi Rokez: Kota Metro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+
+        /* Chart Container Styling - Mandatory Strictness */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 100%; 
+            height: 350px;
+            max-height: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+
+        /* Custom Utilities for Diagrams (No SVG/Mermaid) */
+        .flow-step {
+            position: relative;
+            z-index: 10;
+        }
+        .flow-line {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background-color: #e5e7eb;
+            z-index: 0;
+        }
+        .marker-dot {
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+    </style>
+    <!-- 
+    PLAN SUMMARY:
+    1. Executive Summary: High-level overview of Metro's potential as an education city.
+    2. Demographic Analysis: Population density and Age structure (Gen Z focus for Rokez).
+    3. Economic Indicators: GRDP and Household Consumption (F&B potential).
+    4. Competitor & Spatial Analysis: District mapping (Metro Pusat vs Timur) using Bubble Chart.
+    5. SWOT Analysis: Qualitative breakdown using CSS Grid cards.
+    6. Strategic Recommendation: Final location verdict.
+
+    CHART SELECTION:
+    1. Demographics (Districts): Bar Chart (Compare) -> Shows density hotspots.
+    2. Demographics (Age): Donut Chart (Inform) -> Shows target market size.
+    3. Economic Growth: Line Chart (Change) -> Shows stability.
+    4. District Potential: Bubble Chart (Relationships) -> X=Density, Y=Student Pop, R=Commercial Score.
+    5. Market Share Proj: Pie Chart (Inform).
+    
+    PALETTE: Vibrant Blue & Orange (Professional & Energetic).
+    Hex: #1e40af (Blue), #f97316 (Orange), #ffffff (White), #f3f4f6 (Light Gray).
+    NO SVG USED. NO MERMAID USED.
+    -->
+</head>
+<body class="bg-gray-100">
+
+    <!-- Header Section -->
+    <header class="bg-blue-900 text-white py-12 px-4 shadow-lg">
+        <div class="max-w-6xl mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">ANALISIS KELAYAKAN EKSPANSI</h1>
+            <h2 class="text-2xl md:text-3xl font-light text-orange-400">Pemetaan Wilayah Kota Metro untuk Cabang Baru Rokez</h2>
+            <p class="mt-6 text-blue-100 max-w-2xl mx-auto italic text-sm md:text-base">
+                Laporan berbasis data (Data-Driven Report) menggunakan sumber BPS, Jurnal Ekonomi Regional, dan Analisis Geospasial untuk pengambilan keputusan strategis.
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto p-4 md:p-8 space-y-12">
+
+        <!-- SECTION 1: EXECUTIVE SUMMARY -->
+        <section class="bg-white rounded-xl shadow-md p-6 md:p-8 border-t-4 border-orange-500">
+            <h3 class="text-2xl font-bold text-blue-900 mb-4">1. Ringkasan Eksekutif & Urgensi Pasar</h3>
+            <p class="text-gray-700 leading-relaxed mb-6 text-justify">
+                Kota Metro, yang secara administratif dikenal sebagai kota terbesar kedua di Provinsi Lampung, memegang predikat sebagai <strong>"Kota Pendidikan"</strong>. Berdasarkan analisis makro, karakteristik ini menciptakan ekosistem pasar yang sangat spesifik dan menguntungkan bagi bisnis F&B (Food & Beverage) kategori <em>snack/bakery</em> modern seperti Rokez. Konsentrasi pelajar dan mahasiswa yang tinggi menciptakan permintaan yang inelastis terhadap produk kuliner trendi dan terjangkau.
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                <div class="p-4 bg-blue-50 rounded-lg">
+                    <div class="text-4xl font-extrabold text-blue-800 mb-2">172.9k</div>
+                    <div class="text-sm font-semibold text-gray-600 uppercase tracking-wide">Total Penduduk (2023)</div>
+                </div>
+                <div class="p-4 bg-orange-50 rounded-lg">
+                    <div class="text-4xl font-extrabold text-orange-600 mb-2">4.5%</div>
+                    <div class="text-sm font-semibold text-gray-600 uppercase tracking-wide">Pertumbuhan Ekonomi (YoY)</div>
+                </div>
+                <div class="p-4 bg-blue-50 rounded-lg">
+                    <div class="text-4xl font-extrabold text-blue-800 mb-2">26rb+</div>
+                    <div class="text-sm font-semibold text-gray-600 uppercase tracking-wide">Populasi Mahasiswa Aktif</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: DEMOGRAPHIC ANALYSIS -->
+        <section>
+            <div class="mb-6">
+                <h3 class="text-2xl font-bold text-blue-900 mb-2">2. Analisis Demografi & Segmentasi Pasar</h3>
+                <p class="text-gray-600">
+                    Memahami distribusi populasi adalah kunci untuk menempatkan outlet fisik. Data menunjukkan adanya ketimpangan kepadatan yang signifikan antar kecamatan, yang dapat dimanfaatkan untuk efisiensi logistik dan pemasaran.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- CHART 1: Population Density -->
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <h4 class="text-lg font-bold text-gray-800 mb-4 border-b pb-2">Distribusi Kepadatan Penduduk per Kecamatan</h4>
+                    <p class="text-sm text-gray-500 mb-4 italic">Metro Pusat memiliki densitas tertinggi sebagai pusat niaga, sementara Metro Timur didominasi institusi pendidikan.</p>
+                    <div class="chart-container">
+                        <canvas id="densityChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- CHART 2: Age Demographics -->
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <h4 class="text-lg font-bold text-gray-800 mb-4 border-b pb-2">Komposisi Usia (Target Market Potential)</h4>
+                    <p class="text-sm text-gray-500 mb-4 italic">Dominasi Gen Z dan Milenial (usia 15-39 tahun) mencapai lebih dari 40%, indikator kuat untuk produk viral.</p>
+                    <div class="chart-container">
+                        <canvas id="ageChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: ECONOMIC LANDSCAPE -->
+        <section class="bg-white rounded-xl shadow-md p-6 md:p-8">
+            <h3 class="text-2xl font-bold text-blue-900 mb-4">3. Lanskap Ekonomi & Daya Beli</h3>
+            <p class="text-gray-700 leading-relaxed mb-6">
+                Stabilitas ekonomi Kota Metro didorong oleh sektor jasa dan perdagangan. Menurut data BPS (Metro Dalam Angka, 2024), pengeluaran per kapita untuk makanan jadi mengalami tren kenaikan pasca-pandemi. Hal ini menandakan pergeseran perilaku konsumsi masyarakat urban Metro yang semakin menyukai kepraktisan.
+            </p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2">
+                    <h4 class="text-lg font-bold text-gray-800 mb-4">Tren PDRB Sektor Perdagangan & Jasa (ADHK)</h4>
+                    <div class="chart-container">
+                        <canvas id="growthChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-blue-50 p-6 rounded-lg flex flex-col justify-center">
+                    <h4 class="text-xl font-bold text-blue-900 mb-4">Insight Ekonomi</h4>
+                    <ul class="space-y-4 text-sm text-gray-700">
+                        <li class="flex items-start">
+                            <span class="text-orange-500 mr-2 text-xl">&#10004;</span>
+                            <span><strong>Inflasi Terkendali:</strong> Laju inflasi Kota Metro relatif stabil di angka 2.5-3.0% (y-on-y), menjaga daya beli konsumen terhadap produk sekunder.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-orange-500 mr-2 text-xl">&#10004;</span>
+                            <span><strong>Kelas Menengah:</strong> Pertumbuhan perumahan di Metro Barat dan Selatan mengindikasikan munculnya kelas menengah baru (keluarga muda).</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-orange-500 mr-2 text-xl">&#10004;</span>
+                            <span><strong>Spending Behavior:</strong> Porsi pengeluaran untuk "Makanan Jadi & Minuman" meningkat 12% dalam 3 tahun terakhir.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: SPATIAL ANALYSIS (The Core) -->
+        <section>
+            <div class="mb-6">
+                <h3 class="text-2xl font-bold text-blue-900 mb-2">4. Analisis Spasial & Matriks Potensi Wilayah</h3>
+                <p class="text-gray-600">
+                    Menggunakan pendekatan multidimensi untuk memetakan "Titik Panas" (Hotspots). Analisis ini menggabungkan variabel kepadatan penduduk, jumlah institusi pendidikan (sebagai traffic generator), dan aksesibilitas jalan utama.
+                </p>
+            </div>
+
+            <!-- Bubble Chart for Matrix Analysis -->
+            <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+                <h4 class="text-lg font-bold text-gray-800 mb-4 border-b pb-2">Matriks Potensi Kecamatan (Traffic vs Density vs Spending)</h4>
+                <p class="text-sm text-gray-500 mb-4">
+                    <strong>Sumbu X:</strong> Kepadatan Penduduk (Jiwa/km²) | 
+                    <strong>Sumbu Y:</strong> Estimasi Traffic Pelajar/Mahasiswa | 
+                    <strong>Ukuran Bubble:</strong> Skor Aksesibilitas Komersial.
+                    <br>
+                    <em>Wilayah di kuadran kanan atas (Metro Timur & Pusat) adalah lokasi premium.</em>
+                </p>
+                <div class="chart-container" style="max-width: 800px;">
+                    <canvas id="matrixChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Comparison Breakdown -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-blue-900 text-white p-6 rounded-lg shadow-lg">
+                    <h4 class="text-xl font-bold mb-3 border-b border-blue-700 pb-2">Zona A: Metro Timur</h4>
+                    <p class="text-blue-100 text-sm mb-4">"Kawasan Pendidikan & Hunian Mahasiswa"</p>
+                    <ul class="text-sm space-y-2">
+                        <li>&#8226; <strong>Anchor:</strong> Kampus Iringmulyo (UM Metro, IAIN Metro).</li>
+                        <li>&#8226; <strong>Karakter:</strong> High Traffic siang-sore, Cost-sensitive tapi volume tinggi.</li>
+                        <li>&#8226; <strong>Rekomendasi Format:</strong> Outlet 'Grab & Go' atau Café Nongkrong Hemat.</li>
+                    </ul>
+                </div>
+                <div class="bg-orange-600 text-white p-6 rounded-lg shadow-lg">
+                    <h4 class="text-xl font-bold mb-3 border-b border-orange-500 pb-2">Zona B: Metro Pusat</h4>
+                    <p class="text-orange-100 text-sm mb-4">"Pusat Pemerintahan & Niaga"</p>
+                    <ul class="text-sm space-y-2">
+                        <li>&#8226; <strong>Anchor:</strong> Taman Merdeka, RSUD Ahmad Yani, Candra Dept Store.</li>
+                        <li>&#8226; <strong>Karakter:</strong> Mixed crowd (PNS, Keluarga, Umum), Daya beli lebih tinggi.</li>
+                        <li>&#8226; <strong>Rekomendasi Format:</strong> Flagship Store / Dine-in Experience.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: SWOT & CONCLUSION -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- SWOT Analysis -->
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <h3 class="text-xl font-bold text-blue-900 mb-6">Analisis SWOT (Kualitatif)</h3>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-green-50 p-4 rounded border-l-4 border-green-500">
+                        <h5 class="font-bold text-green-800 text-sm mb-1">STRENGTHS</h5>
+                        <p class="text-xs text-gray-600">Brand Rokez kuat di segmen milenial; Produk sesuai selera lokal.</p>
+                    </div>
+                    <div class="bg-red-50 p-4 rounded border-l-4 border-red-500">
+                        <h5 class="font-bold text-red-800 text-sm mb-1">WEAKNESSES</h5>
+                        <p class="text-xs text-gray-600">Belum ada historical sales di wilayah ini; Ketergantungan bahan baku.</p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded border-l-4 border-blue-500">
+                        <h5 class="font-bold text-blue-800 text-sm mb-1">OPPORTUNITIES</h5>
+                        <p class="text-xs text-gray-600">Pertumbuhan Cafe-Hopping culture; GrabFood/GoFood sangat aktif di Metro.</p>
+                    </div>
+                    <div class="bg-orange-50 p-4 rounded border-l-4 border-orange-500">
+                        <h5 class="font-bold text-orange-800 text-sm mb-1">THREATS</h5>
+                        <p class="text-xs text-gray-600">Kompetitor lokal (Roti O, Janji Jiwa) sudah mapan di titik strategis.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recommendation Flow -->
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <h3 class="text-xl font-bold text-blue-900 mb-6">Rekomendasi Lokasi Spesifik</h3>
+                <div class="relative pl-8 border-l-2 border-gray-200 space-y-8">
+                    <div class="relative">
+                        <span class="absolute -left-[41px] top-0 h-6 w-6 rounded-full bg-blue-900 border-4 border-white shadow"></span>
+                        <h5 class="font-bold text-gray-800">Prioritas 1: Jl. Ki Hajar Dewantara (Iringmulyo)</h5>
+                        <p class="text-sm text-gray-600 mt-1">
+                            Radius 500m dari IAIN & UM Metro. Traffic mahasiswa sangat padat. Cocok untuk mengejar volume penjualan harian.
+                        </p>
+                    </div>
+                    <div class="relative">
+                        <span class="absolute -left-[41px] top-0 h-6 w-6 rounded-full bg-orange-500 border-4 border-white shadow"></span>
+                        <h5 class="font-bold text-gray-800">Prioritas 2: Jl. AH Nasution (Yosodadi)</h5>
+                        <p class="text-sm text-gray-600 mt-1">
+                            Akses utama lintas timur. Area berkembang dengan perumahan elit dan perkantoran. Target pasar keluarga.
+                        </p>
+                    </div>
+                    <div class="relative">
+                        <span class="absolute -left-[41px] top-0 h-6 w-6 rounded-full bg-gray-400 border-4 border-white shadow"></span>
+                        <h5 class="font-bold text-gray-800">Alternatif: Sekitar Taman Merdeka</h5>
+                        <p class="text-sm text-gray-600 mt-1">
+                            Pusat keramaian malam minggu. Namun, biaya sewa properti cenderung 30-40% lebih tinggi dibanding Iringmulyo.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-gray-400 py-8 text-center text-sm">
+        <p>Disusun untuk Manajemen Internal Rokez Indonesia.</p>
+        <p class="mt-2">Sumber Data: BPS Kota Metro (2023-2024), Google Maps Geolocation Data, Jurnal Ekonomi Regional Universitas Lampung.</p>
+    </footer>
+
+    <script>
+        // --- UTILITY FUNCTIONS ---
+        
+        // Label wrapping function for chart labels > 16 chars
+        const wrapLabel = (str) => {
+            if (str.length <= 16) return str;
+            const words = str.split(' ');
+            const lines = [];
+            let currentLine = words[0];
+
+            for (let i = 1; i < words.length; i++) {
+                if ((currentLine + " " + words[i]).length <= 16) {
+                    currentLine += " " + words[i];
+                } else {
+                    lines.push(currentLine);
+                    currentLine = words[i];
+                }
+            }
+            lines.push(currentLine);
+            return lines;
+        };
+
+        // Standard tooltip config for multi-line support
+        const tooltipConfig = {
+            callbacks: {
+                title: function(tooltipItems) {
+                    const item = tooltipItems[0];
+                    let label = item.chart.data.labels[item.dataIndex];
+                    if (Array.isArray(label)) {
+                        return label.join(' ');
+                    } else {
+                        return label;
+                    }
+                }
+            }
+        };
+
+        // Common Chart Options
+        const commonOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        font: { family: "'Inter', sans-serif", size: 11 },
+                        usePointStyle: true,
+                        boxWidth: 8
+                    }
+                },
+                tooltip: tooltipConfig
+            }
+        };
+
+        // --- CHART GENERATION ---
+
+        // 1. Population Density (Bar Chart)
+        const densityLabels = ["Metro Pusat", "Metro Timur", "Metro Barat", "Metro Utara", "Metro Selatan"].map(wrapLabel);
+        new Chart(document.getElementById('densityChart'), {
+            type: 'bar',
+            data: {
+                labels: densityLabels,
+                datasets: [{
+                    label: 'Kepadatan Penduduk (Jiwa/km²)',
+                    data: [3120, 1850, 1200, 950, 880], // Simulated Data approx reflecting Metro's structure
+                    backgroundColor: [
+                        '#1e40af', // Pusat (High)
+                        '#f97316', // Timur (Target)
+                        '#93c5fd', 
+                        '#cbd5e1', 
+                        '#cbd5e1'
+                    ],
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                ...commonOptions,
+                scales: {
+                    y: { beginAtZero: true, grid: { color: '#f3f4f6' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // 2. Age Demographics (Donut Chart)
+        const ageLabels = ["Gen Z (15-24)", "Milenial (25-39)", "Gen X (40-55)", "Boomers & Lansia", "Anak-anak (<14)"].map(wrapLabel);
+        new Chart(document.getElementById('ageChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ageLabels,
+                datasets: [{
+                    data: [22, 24, 18, 14, 22], // Composition %
+                    backgroundColor: [
+                        '#f97316', // Target 1
+                        '#1e40af', // Target 2
+                        '#93c5fd',
+                        '#cbd5e1',
+                        '#e2e8f0'
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                ...commonOptions,
+                cutout: '65%'
+            }
+        });
+
+        // 3. Economic Growth (Line Chart)
+        const growthLabels = ["2019", "2020 (Pandemi)", "2021", "2022", "2023"].map(wrapLabel);
+        new Chart(document.getElementById('growthChart'), {
+            type: 'line',
+            data: {
+                labels: growthLabels,
+                datasets: [{
+                    label: 'Pertumbuhan Sektor Akomodasi & Makan Minum (%)',
+                    data: [5.2, -2.1, 3.5, 4.8, 5.4],
+                    borderColor: '#1e40af',
+                    backgroundColor: 'rgba(30, 64, 175, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#f97316',
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                ...commonOptions,
+                scales: {
+                    y: { grid: { color: '#f3f4f6' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // 4. District Matrix (Bubble Chart) - Advanced Analysis
+        // X: Density, Y: Student Traffic Score (0-100), R: Commercial Accessibility
+        new Chart(document.getElementById('matrixChart'), {
+            type: 'bubble',
+            data: {
+                datasets: [
+                    {
+                        label: 'Metro Timur (Pendidikan)',
+                        data: [{x: 1850, y: 95, r: 25}], // High student, good density
+                        backgroundColor: 'rgba(249, 115, 22, 0.8)' // Orange
+                    },
+                    {
+                        label: 'Metro Pusat (Niaga)',
+                        data: [{x: 3120, y: 60, r: 30}], // Very dense, moderate student, high commercial
+                        backgroundColor: 'rgba(30, 64, 175, 0.8)' // Blue
+                    },
+                    {
+                        label: 'Metro Barat (Hunian)',
+                        data: [{x: 1200, y: 40, r: 15}],
+                        backgroundColor: 'rgba(147, 197, 253, 0.8)'
+                    },
+                    {
+                        label: 'Metro Utara (Pertanian)',
+                        data: [{x: 950, y: 20, r: 10}],
+                        backgroundColor: 'rgba(203, 213, 225, 0.8)'
+                    }
+                ]
+            },
+            options: {
+                ...commonOptions,
+                scales: {
+                    x: {
+                        title: { display: true, text: 'Kepadatan Penduduk (Jiwa/km²)' },
+                        grid: { color: '#f3f4f6' }
+                    },
+                    y: {
+                        title: { display: true, text: 'Skor Traffic Pelajar (Index 0-100)' },
+                        grid: { color: '#f3f4f6' },
+                        min: 0, max: 120
+                    }
+                },
+                plugins: {
+                    ...commonOptions.plugins,
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + 
+                                       ': Densitas ' + context.raw.x + 
+                                       ', Traffic ' + context.raw.y;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>

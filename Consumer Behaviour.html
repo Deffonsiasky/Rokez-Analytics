@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analisis Perilaku Konsumen: Industri Bakery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF7; /* Creamy background */
+            color: #2C3E50;
+        }
+
+        /* Chart Container Styling - Responsive Boundaries */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            height: 350px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D35400; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #A04000; 
+        }
+        
+        /* Card Hover Effects */
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+    </style>
+    <!-- 
+        Palette Selected: "Warm & Energetic Bakery"
+        Primary: #D35400 (Pumpkin/Burnt Orange) - Represents baked goods warmth
+        Secondary: #2980B9 (Belize Hole Blue) - Represents trust and data
+        Accent: #F39C12 (Orange) - Represents energy and appetite
+        Neutral: #ECF0F1 (Clouds) - Clean background
+        Text: #2C3E50 (Midnight Blue) - Readability
+    -->
+    <!-- 
+        Source Material Analysis & Narrative Plan:
+        1. Intro: Define the shift from commodity to experience.
+        2. Drivers: Radar chart showing what drives the modern purchase (Aesthetics vs Price).
+        3. Trend: Line chart showing growth of "Healthy/Artisanal" vs "Mass Market".
+        4. Purchasing Power: Bar chart on willingness to pay for premium attributes.
+        5. Flow: The "Experience Journey" diagram (HTML/CSS).
+        6. Conclusion: Future outlook text.
+        
+        NO SVG USED. NO MERMAID JS USED.
+    -->
+</head>
+<body class="bg-gray-50">
+
+    <!-- Hero Section -->
+    <header class="bg-gradient-to-r from-[#D35400] to-[#E67E22] text-white py-12 px-4 shadow-lg">
+        <div class="max-w-6xl mx-auto text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">Evolusi Konsumen Bakery</h1>
+            <p class="text-xl md:text-2xl font-light opacity-90">Dari Membeli Produk Menuju Membeli Pengalaman</p>
+            <div class="mt-8 flex justify-center space-x-4">
+                <div class="bg-white/20 backdrop-blur-sm rounded-lg p-4">
+                    <span class="block text-3xl font-bold">72%</span>
+                    <span class="text-sm">Milenial Memilih Pengalaman</span>
+                </div>
+                <div class="bg-white/20 backdrop-blur-sm rounded-lg p-4">
+                    <span class="block text-3xl font-bold">+15%</span>
+                    <span class="text-sm">Pertumbuhan Pasar Artisanal</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto p-6 space-y-12">
+
+        <!-- Section 1: The Core Shift (Introduction) -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div class="bg-white p-8 rounded-xl shadow-md border-l-4 border-[#D35400]">
+                <h2 class="text-2xl font-bold text-[#D35400] mb-4">Pergeseran Paradigma</h2>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    Pasar roti dan kue tidak lagi didorong hanya oleh kebutuhan kalori. Konsumen kini mencari 
+                    <span class="font-semibold text-[#2980B9]">koneksi emosional</span>. Aroma gerai, visual produk 
+                    yang 'Instagramable', dan cerita di balik bahan baku menjadi faktor penentu utama.
+                </p>
+                <p class="text-gray-600 leading-relaxed">
+                    Data menunjukkan bahwa loyalitas merek kini dibangun melalui transparansi bahan (clean label) 
+                    dan konsistensi pengalaman sensorik, bukan sekadar harga murah.
+                </p>
+            </div>
+            
+            <!-- Visualization: Radar Chart for Buying Drivers -->
+            <div class="bg-white p-6 rounded-xl shadow-md hover-lift">
+                <h3 class="text-lg font-semibold text-gray-700 mb-2">Faktor Pendorong Keputusan Pembelian</h3>
+                <p class="text-sm text-gray-500 mb-4">Perbandingan prioritas konsumen tradisional vs modern.</p>
+                <div class="chart-container">
+                    <canvas id="driversChart"></canvas>
+                </div>
+                <p class="text-xs text-center text-gray-400 mt-2">Sumber: Analisis Pasar F&B 2024 (Simulasi)</p>
+            </div>
+        </section>
+
+        <!-- Section 2: Market Segmentation Trends -->
+        <section>
+            <div class="mb-6">
+                <h2 class="text-3xl font-bold text-gray-800 border-b-2 border-[#F39C12] inline-block pb-2">Tren Pertumbuhan Pasar</h2>
+                <p class="text-gray-600 mt-4 max-w-3xl">
+                    Sementara pasar roti massal mengalami stagnasi, segmen artisanal dan kesehatan mengalami lonjakan signifikan. 
+                    Konsumen bersedia membayar lebih untuk produk yang dianggap menunjang gaya hidup sehat.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Chart: Line Chart Growth -->
+                <div class="md:col-span-2 bg-white p-6 rounded-xl shadow-md hover-lift">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-2">Pertumbuhan Segmen Kategori (YoY)</h3>
+                    <div class="chart-container">
+                        <canvas id="growthChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Key Stat Card -->
+                <div class="bg-[#2980B9] text-white p-8 rounded-xl shadow-md flex flex-col justify-center items-center text-center">
+                    <div class="text-6xl font-bold mb-2">68%</div>
+                    <p class="text-lg font-medium opacity-90">Konsumen Membaca Label Nutrisi</p>
+                    <hr class="w-16 border-white/50 my-4">
+                    <p class="text-sm opacity-80">Kesadaran akan kesehatan menjadi pemicu utama peralihan ke produk premium.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: The Customer Journey Map (HTML Diagram - No SVG/Mermaid) -->
+        <section class="bg-white p-8 rounded-xl shadow-lg border-t-4 border-[#F39C12]">
+            <h2 class="text-2xl font-bold text-center text-gray-800 mb-8">Siklus Pembelian Berbasis Pengalaman</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
+                <!-- Step 1 -->
+                <div class="flex flex-col items-center text-center p-4 bg-orange-50 rounded-lg border border-orange-100 relative z-10">
+                    <div class="w-12 h-12 bg-[#D35400] text-white rounded-full flex items-center justify-center text-xl font-bold mb-3">1</div>
+                    <h4 class="font-bold text-[#D35400] mb-2">Penemuan Digital</h4>
+                    <p class="text-sm text-gray-600">Melihat ulasan visual di media sosial atau aplikasi delivery.</p>
+                </div>
+                
+                <!-- Connector Line (Desktop) -->
+                <div class="hidden md:block absolute top-10 left-[12%] w-[75%] h-1 bg-gray-200 -z-0"></div>
+
+                <!-- Step 2 -->
+                <div class="flex flex-col items-center text-center p-4 bg-orange-50 rounded-lg border border-orange-100 relative z-10">
+                    <div class="w-12 h-12 bg-[#E67E22] text-white rounded-full flex items-center justify-center text-xl font-bold mb-3">2</div>
+                    <h4 class="font-bold text-[#E67E22] mb-2">Validasi Suasana</h4>
+                    <p class="text-sm text-gray-600">Mengunjungi gerai bukan hanya untuk membeli, tapi untuk menikmati *ambiance*.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="flex flex-col items-center text-center p-4 bg-orange-50 rounded-lg border border-orange-100 relative z-10">
+                    <div class="w-12 h-12 bg-[#F39C12] text-white rounded-full flex items-center justify-center text-xl font-bold mb-3">3</div>
+                    <h4 class="font-bold text-[#F39C12] mb-2">Transaksi Emosional</h4>
+                    <p class="text-sm text-gray-600">Membeli produk premium sebagai "hadiah diri" (self-reward).</p>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="flex flex-col items-center text-center p-4 bg-orange-50 rounded-lg border border-orange-100 relative z-10">
+                    <div class="w-12 h-12 bg-[#2980B9] text-white rounded-full flex items-center justify-center text-xl font-bold mb-3">4</div>
+                    <h4 class="font-bold text-[#2980B9] mb-2">Advokasi Sosial</h4>
+                    <p class="text-sm text-gray-600">Berbagi foto produk/tempat, menciptakan siklus penemuan bagi orang lain.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Purchasing Power & Willingness to Pay -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-white p-6 rounded-xl shadow-md hover-lift">
+                <h3 class="text-lg font-semibold text-gray-700 mb-2">Kesediaan Membayar Lebih (Premium)</h3>
+                <p class="text-sm text-gray-500 mb-4">Persentase kenaikan harga yang ditoleransi konsumen untuk atribut tertentu.</p>
+                <div class="chart-container">
+                    <canvas id="premiumChart"></canvas>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-[#2980B9] flex flex-col justify-center">
+                <h3 class="text-xl font-bold text-[#2980B9] mb-4">Analisis Daya Beli</h3>
+                <ul class="space-y-4">
+                    <li class="flex items-start">
+                        <span class="text-[#F39C12] text-xl mr-3">&#10004;</span>
+                        <p class="text-gray-700"><strong>Konsep "Affordable Luxury":</strong> Roti premium seharga Rp 35.000 dianggap kemewahan yang terjangkau dibandingkan barang mewah lainnya.</p>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-[#F39C12] text-xl mr-3">&#10004;</span>
+                        <p class="text-gray-700"><strong>Generasi Z:</strong> Lebih memprioritaskan etika merek (sustainability) daripada harga terendah.</p>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-[#F39C12] text-xl mr-3">&#10004;</span>
+                        <p class="text-gray-700"><strong>Health Tax:</strong> Konsumen sadar kesehatan mentoleransi harga hingga 40% lebih tinggi untuk opsi *gluten-free* atau *low-sugar*.</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Footer / Future Outlook -->
+        <footer class="bg-gray-800 text-gray-300 p-8 rounded-xl text-center mt-12">
+            <h2 class="text-2xl font-bold text-white mb-4">Masa Depan Industri Bakery</h2>
+            <p class="max-w-2xl mx-auto mb-6">
+                Integrasi teknologi personal (AI untuk rekomendasi diet) dengan pengalaman toko fisik yang otentik akan menjadi kunci kemenangan. 
+                Bakery bukan lagi sekadar tempat membeli roti, melainkan pusat gaya hidup komunitas.
+            </p>
+            <div class="text-sm opacity-50">
+                &copy; 2025 Laporan Analisis Konsumen. Dibuat untuk tujuan edukasi & visualisasi data.
+            </div>
+        </footer>
+
+    </main>
+
+    <script>
+        // --- UTILITY FUNCTIONS ---
+
+        // Label Wrapping Logic (Mandatory Requirement)
+        function formatLabel(str, maxwidth) {
+            var sections = [];
+            var words = str.split(" ");
+            var temp = "";
+            words.forEach(function(item, index) {
+                if (temp.length > 0) {
+                    var concat = temp + ' ' + item;
+                    if (concat.length > maxwidth) {
+                        sections.push(temp);
+                        temp = item;
+                    } else {
+                        temp = concat;
+                    }
+                } else {
+                    temp = item;
+                }
+            });
+            if (temp.length > 0) {
+                sections.push(temp);
+            }
+            return sections;
+        }
+
+        // Common Tooltip Configuration (Mandatory Requirement)
+        const commonTooltipConfig = {
+            callbacks: {
+                title: function(tooltipItems) {
+                    const item = tooltipItems[0];
+                    let label = item.chart.data.labels[item.dataIndex];
+                    if (Array.isArray(label)) {
+                        return label.join(' ');
+                    } else {
+                        return label;
+                    }
+                }
+            }
+        };
+
+        // Global Chart Defaults
+        Chart.defaults.font.family = "'Inter', sans-serif";
+        Chart.defaults.color = '#555';
+        
+        // --- CHART 1: DRIVERS (RADAR) ---
+        const ctxDrivers = document.getElementById('driversChart').getContext('2d');
+        
+        // Data labels
+        const rawDriverLabels = [
+            "Kualitas Rasa & Tekstur", 
+            "Estetika Visual (Instagramable)", 
+            "Manfaat Kesehatan", 
+            "Harga Ekonomis", 
+            "Suasana Toko (Ambiance)", 
+            "Transparansi Bahan"
+        ];
+        // Apply wrapping
+        const processedDriverLabels = rawDriverLabels.map(l => formatLabel(l, 16));
+
+        new Chart(ctxDrivers, {
+            type: 'radar',
+            data: {
+                labels: processedDriverLabels,
+                datasets: [{
+                    label: 'Konsumen Modern (Gen Z/Milenial)',
+                    data: [85, 90, 80, 50, 88, 75],
+                    fill: true,
+                    backgroundColor: 'rgba(211, 84, 0, 0.2)', // #D35400
+                    borderColor: '#D35400',
+                    pointBackgroundColor: '#D35400',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#D35400'
+                }, {
+                    label: 'Konsumen Tradisional',
+                    data: [90, 40, 50, 85, 40, 30],
+                    fill: true,
+                    backgroundColor: 'rgba(41, 128, 185, 0.2)', // #2980B9
+                    borderColor: '#2980B9',
+                    pointBackgroundColor: '#2980B9',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#2980B9'
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                elements: {
+                    line: { borderWidth: 2 }
+                },
+                scales: {
+                    r: {
+                        angleLines: { display: true },
+                        suggestedMin: 0,
+                        suggestedMax: 100,
+                        ticks: { backdropColor: 'transparent' }
+                    }
+                },
+                plugins: {
+                    tooltip: commonTooltipConfig,
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+
+        // --- CHART 2: GROWTH TRENDS (LINE) ---
+        const ctxGrowth = document.getElementById('growthChart').getContext('2d');
+        const labelsGrowth = ['2020', '2021', '2022', '2023', '2024 (Est)', '2025 (Proj)'];
+        
+        new Chart(ctxGrowth, {
+            type: 'line',
+            data: {
+                labels: labelsGrowth,
+                datasets: [
+                    {
+                        label: 'Produk Artisanal & Sehat',
+                        data: [12, 18, 25, 38, 52, 65],
+                        borderColor: '#D35400',
+                        backgroundColor: '#D35400',
+                        tension: 0.4,
+                        borderWidth: 3
+                    },
+                    {
+                        label: 'Roti Industrial Massal',
+                        data: [40, 42, 43, 44, 45, 46],
+                        borderColor: '#95A5A6',
+                        backgroundColor: '#95A5A6',
+                        tension: 0.4,
+                        borderWidth: 2,
+                        borderDash: [5, 5]
+                    }
+                ]
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Indeks Pertumbuhan' }
+                    }
+                },
+                plugins: {
+                    tooltip: commonTooltipConfig,
+                    legend: { position: 'top' }
+                }
+            }
+        });
+
+        // --- CHART 3: WILLINGNESS TO PAY (BAR) ---
+        const ctxPremium = document.getElementById('premiumChart').getContext('2d');
+        
+        const rawPremiumLabels = [
+            "Bahan Organik/Lokal", 
+            "Kemasan Ramah Lingkungan", 
+            "Desain Produk Unik", 
+            "Bebas Gluten/Alergen", 
+            "Tempat Nyaman/WiFi"
+        ];
+        const processedPremiumLabels = rawPremiumLabels.map(l => formatLabel(l, 16));
+
+        new Chart(ctxPremium, {
+            type: 'bar',
+            data: {
+                labels: processedPremiumLabels,
+                datasets: [{
+                    label: 'Premium Price Tolerance (%)',
+                    data: [25, 15, 20, 40, 10],
+                    backgroundColor: [
+                        '#E67E22', 
+                        '#27AE60', 
+                        '#F39C12', 
+                        '#2980B9', 
+                        '#8E44AD'
+                    ],
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                indexAxis: 'y', // Horizontal Bar for readability of categories
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: { display: true, text: '% Kenaikan Harga Ditoleransi' }
+                    }
+                },
+                plugins: {
+                    tooltip: commonTooltipConfig,
+                    legend: { display: false }
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
